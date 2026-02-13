@@ -73,9 +73,10 @@ class WhatsAppService {
     setupEventListeners() {
         if (!this.client) return;
 
-        this.client.onMessage(async (message) => {
-            await this.handleIncomingMessage(message);
-        });
+        // Desativado: uso apenas para ENVIO (agendamento). Não repassar mensagens recebidas ao Back.
+        // this.client.onMessage(async (message) => {
+        //     await this.handleIncomingMessage(message);
+        // });
 
         this.client.onIncomingCall(async (call) => {
             await this.handleIncomingCall(call);
@@ -159,19 +160,20 @@ class WhatsAppService {
 
     /**
      * Processa mensagens recebidas
+     * DESATIVADO: gateway usado apenas para ENVIO (agendamento), não processa mensagens recebidas
      */
-    async handleIncomingMessage(message) {
-        try {
-            if (message.fromMe) return;
-            if (message.isStatus || message.from === 'status@broadcast') return;
-            if (message.isGroupMsg || message.from.includes('@g.us')) return;
+    // async handleIncomingMessage(message) {
+    //     try {
+    //         if (message.fromMe) return;
+    //         if (message.isStatus || message.from === 'status@broadcast') return;
+    //         if (message.isGroupMsg || message.from.includes('@g.us')) return;
 
-            logger.info('Mensagem recebida', { from: message.from, type: message.type, hasBody: !!message.body });
-            await webhookService.forwardMessage(message);
-        } catch (error) {
-            logger.error('Erro ao processar mensagem', { error: error.message });
-        }
-    }
+    //         logger.info('Mensagem recebida', { from: message.from, type: message.type, hasBody: !!message.body });
+    //         await webhookService.forwardMessage(message);
+    //     } catch (error) {
+    //         logger.error('Erro ao processar mensagem', { error: error.message });
+    //     }
+    // }
 
     /**
      * Rejeita chamadas recebidas
