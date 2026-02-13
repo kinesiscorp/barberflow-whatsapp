@@ -3,7 +3,7 @@
  */
 const config = {
   // Servidor
-  port: parseInt(process.env.PORT, 10) || 3000,
+  port: parseInt(process.env.PORT, 10) || 3031,
 
   // Webhook
   webhookUrl: process.env.WEBHOOK_URL || '',

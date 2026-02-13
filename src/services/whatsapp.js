@@ -166,7 +166,13 @@ class WhatsAppService {
             if (message.isStatus || message.from === 'status@broadcast') return;
             if (message.isGroupMsg || message.from.includes('@g.us')) return;
 
-            logger.info('Mensagem recebida', { from: message.from, type: message.type, hasBody: !!message.body });
+            logger.info('Mensagem recebida', {
+                from: message.from,
+                type: message.type,
+                hasBody: !!message.body,
+                body: message.body || null,
+                caption: message.caption || null,
+            });
             await webhookService.forwardMessage(message);
         } catch (error) {
             logger.error('Erro ao processar mensagem', { error: error.message });
